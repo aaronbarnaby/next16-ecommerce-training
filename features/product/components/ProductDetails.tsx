@@ -1,5 +1,5 @@
 import { Bookmark } from 'lucide-react';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import Boundary from '@/components/internal/Boundary';
 import Button from '@/components/ui/Button';
 import Divider from '@/components/ui/Divider';
@@ -14,7 +14,9 @@ type Props = {
   children?: React.ReactNode;
 };
 
-export default async function ProductDetails({ productId }: Props) {
+export default async function ProductDetails({ productId, children }: PropsWithChildren<Props>) {
+  'use cache';
+
   const productDetails = await getProductDetails(productId);
   const setFeaturedForProduct = setFeaturedProduct.bind(null, productId);
 
@@ -38,9 +40,7 @@ export default async function ProductDetails({ productId }: Props) {
         />
         <div className="mt-6">
           <Divider variant="dotted" className="mb-4" />
-          <div className="flex flex-wrap gap-4">
-            <SavedProduct productId={productId} />
-          </div>
+          <div className="flex flex-wrap gap-4">{children}</div>
         </div>
       </div>
     </Boundary>

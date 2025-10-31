@@ -1,10 +1,15 @@
 import React, { Suspense } from 'react';
 import Boundary from '@/components/internal/Boundary';
 import CategoryFilterButton from './CategoryFilterButton';
+import { getCategories } from '../category-queries';
 
-export default async function CategoryFilters({ categories }: { categories: string[] }) {
+export default async function CategoryFilters() {
+  'use cache';
+
+  const categories = await getCategories();
+
   return (
-    <Boundary hydration="server" rendering="hybrid">
+    <Boundary hydration="server" rendering="hybrid" cached>
       <div className="flex flex-wrap gap-2 lg:flex-col lg:gap-1">
         <Suspense fallback={<CategoryFilterButtonSkeleton />}>
           <CategoryFilterButton>All</CategoryFilterButton>

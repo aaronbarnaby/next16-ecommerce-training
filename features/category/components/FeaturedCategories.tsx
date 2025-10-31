@@ -3,13 +3,18 @@ import Boundary from '@/components/internal/Boundary';
 import Skeleton from '@/components/ui/Skeleton';
 import { getCategoriesWithCount } from '../category-queries';
 import type { Route } from 'next';
+import { cacheLife } from 'next/cache';
 
 export default async function FeaturedCategories() {
+  'use cache';
+
+  cacheLife('days');
+
   const categoriesWithCount = await getCategoriesWithCount();
   const categoryList = categoriesWithCount.slice(0, 4);
 
   return (
-    <Boundary rendering="hybrid" hydration="server">
+    <Boundary rendering="hybrid" hydration="server" cached>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {categoryList.map(category => {
           return (

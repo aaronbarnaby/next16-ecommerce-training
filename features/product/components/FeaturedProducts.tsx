@@ -1,12 +1,17 @@
 import Boundary from '@/components/internal/Boundary';
 import ProductCard, { ProductCardSkeleton } from '@/components/ui/ProductCard';
 import { getFeaturedProducts } from '../product-queries';
+import { cacheLife } from 'next/cache';
 
 export default async function FeaturedProducts() {
+  'use cache';
+
+  cacheLife('days');
+
   const products = await getFeaturedProducts(4);
 
   return (
-    <Boundary rendering="hybrid" hydration="server">
+    <Boundary rendering="hybrid" hydration="server" cached>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {products.map(product => {
           return (

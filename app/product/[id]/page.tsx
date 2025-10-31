@@ -1,9 +1,14 @@
 import { Suspense } from 'react';
 import BackButton from '@/components/ui/BackButton';
 import Card from '@/components/ui/Card';
-import Product, { ProductSkeleton } from '@/features/product/components/Product';
-import ProductDetails, { ProductDetailsSkeleton } from '@/features/product/components/ProductDetails';
+import Product from '@/features/product/components/Product';
+import ProductDetails, { SavedProduct } from '@/features/product/components/ProductDetails';
 import Reviews, { ReviewsSkeleton } from '@/features/product/components/Reviews';
+import { Bookmark } from 'lucide-react';
+
+export async function generateStaticParams() {
+  return [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }];
+}
 
 export default async function ProductPage({ params }: PageProps<'/product/[id]'>) {
   const { id } = await params;
@@ -14,23 +19,16 @@ export default async function ProductPage({ params }: PageProps<'/product/[id]'>
       <BackButton />
       <div className="flex w-full flex-col gap-8 self-center md:w-[700px]">
         <Card>
-          <Suspense
-            fallback={
-              <>
-                <ProductSkeleton isDetails />
-                <ProductDetailsSkeleton />
-              </>
-            }
-          >
-            <Product
-              productId={productId}
-              details={
-                <Suspense key={productId} fallback={<ProductDetailsSkeleton />}>
-                  <ProductDetails key={productId} productId={productId} />
+          <Product
+            productId={productId}
+            details={
+              <ProductDetails key={productId} productId={productId}>
+                <Suspense fallback={<Bookmark aria-hidden className="text-gray size-5" />}>
+                  <SavedProduct productId={productId} />
                 </Suspense>
-              }
-            />
-          </Suspense>
+              </ProductDetails>
+            }
+          />
         </Card>
         <div>
           <h2 className="mb-4 text-xl font-semibold">Customer Reviews</h2>

@@ -1,51 +1,39 @@
-'use client';
-
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
-import useSWR from 'swr';
-import { fetcher } from '@/utils/fetcher';
 import Boundary from '../internal/Boundary';
+import { getCurrentAccount, getIsAuthenticated } from '@/features/auth/auth-queries';
+import { getSavedProducts } from '@/features/product/product-queries';
+import { getUserDiscounts } from '@/features/user/user-queries';
+import { BannerContainer } from './BannerContainer';
+import { Suspense } from 'react';
+import { MotionDiv } from '../ui/MotionWrappers';
 
-export default function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
-  const [dismissed, setDismissed] = useState(false);
-  if (dismissed) return null;
-
+export default function WelcomeBanner() {
   return (
-    <Boundary hydration="client">
-      <div className="border-divider dark:border-divider-dark from-accent/5 via-accent/3 dark:from-accent/10 dark:via-accent/5 relative flex items-start justify-between gap-3 border bg-linear-to-tr to-transparent p-4 sm:gap-4 sm:p-5 dark:to-transparent">
-        <div className="flex-1">
-          <PersonalBanner loggedIn={loggedIn} />
-        </div>
-        <button
-          onClick={() => {
-            setDismissed(true);
-          }}
-          className="group text-gray/70 hover:border-divider hover:text-accent dark:text-gray/60 dark:hover:text-accent -m-1 inline-flex h-6 w-6 items-center justify-center border border-transparent p-0 transition-colors"
-          aria-label="Dismiss banner"
-        >
-          <X aria-hidden className="h-4 w-4" />
-        </button>
-      </div>
-    </Boundary>
+    <BannerContainer>
+      <Suspense fallback={<GeneralBanner />}>
+        <PersonalBanner />
+      </Suspense>
+    </BannerContainer>
   );
 }
 
-export function PersonalBanner({ loggedIn }: { loggedIn: boolean }) {
-  const { data, isLoading } = useSWR('/api/discount-data', fetcher);
+export async function PersonalBanner() {
+  const loggedIn = await getIsAuthenticated();
+  if (!loggedIn) return <GeneralBanner />;
 
-  if (isLoading || !loggedIn) {
-    return <GeneralBanner />;
-  }
+  const [account, discounts, savedProducts] = await Promise.all([
+    getCurrentAccount(),
+    getUserDiscounts(),
+    getSavedProducts(),
+  ]);
 
-  const { account, discounts, savedProducts } = data;
   const featuredDiscount = discounts[0];
   const firstName = account?.firstName || account?.name.split(' ')[0];
 
   return (
     <Boundary hydration="server" rendering="dynamic">
-      <motion.div
+      <MotionDiv
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 0.3, 1, 0.8, 1] }}
         transition={{
@@ -96,7 +84,7 @@ export function PersonalBanner({ loggedIn }: { loggedIn: boolean }) {
             </Link>
           )}
         </div>
-      </motion.div>
+      </MotionDiv>
     </Boundary>
   );
 }

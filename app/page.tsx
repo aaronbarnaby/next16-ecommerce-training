@@ -10,33 +10,27 @@ import Hero, { HeroSkeleton } from '@/features/product/components/Hero';
 import Recommendations, { RecommendationsSkeleton } from '@/features/user/components/Recommendations';
 
 export default async function HomePage() {
-  const loggedIn = await getIsAuthenticated();
-
   return (
     <div className="flex flex-col gap-10">
-      <Suspense fallback={<HeroSkeleton />}>
-        <Hero />
+      <Hero />
+      <WelcomeBanner />
+      <Suspense>
+        <PersonalizedSection />
       </Suspense>
-      <WelcomeBanner loggedIn={loggedIn} />
-      <PersonalizedSection loggedIn={loggedIn} />
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-xl font-bold tracking-tight uppercase sm:text-2xl">Featured Categories</h2>
         <Link href="/all" className="text-xs font-semibold tracking-wide uppercase sm:text-sm">
           View All →
         </Link>
       </div>
-      <Suspense fallback={<FeaturedCategoriesSkeleton />}>
-        <FeaturedCategories />
-      </Suspense>
+      <FeaturedCategories />
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-xl font-bold tracking-tight uppercase sm:text-2xl">Featured Products</h2>
         <Link href="/all" className="text-xs font-semibold tracking-wide uppercase sm:text-sm">
           View All Products →
         </Link>
       </div>
-      <Suspense fallback={<FeaturedProductsSkeleton />}>
-        <FeaturedProducts />
-      </Suspense>
+      <FeaturedProducts />
       <section className="grid gap-6 md:grid-cols-2">
         <div className="bg-accent/10 dark:bg-accent/20 border-divider dark:border-divider-dark border p-6">
           <h3 className="mb-2 text-xl font-bold tracking-tight uppercase">Member Rewards</h3>
@@ -71,7 +65,9 @@ export default async function HomePage() {
   );
 }
 
-async function PersonalizedSection({ loggedIn }: { loggedIn: boolean }) {
+async function PersonalizedSection() {
+  const loggedIn = await getIsAuthenticated();
+
   if (!loggedIn) {
     return null;
   }

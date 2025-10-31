@@ -6,13 +6,13 @@ import { cache } from 'react';
 import { prisma } from '@/db';
 import { slow } from '@/utils/slow';
 
-export const getIsAuthenticated = async () => {
+export const getIsAuthenticated = cache(async () => {
   const selectedAccountId = (await cookies()).get('selectedAccountId')?.value;
   if (!selectedAccountId) {
     return false;
   }
   return true;
-};
+});
 
 export const getAccount = cache(async (accountId: string) => {
   await slow();

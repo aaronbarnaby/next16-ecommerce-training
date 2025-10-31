@@ -4,6 +4,8 @@ import LinkStatus from '@/components/ui/LinkStatus';
 import { getCategories } from '../category-queries';
 
 export default async function Categories() {
+  'use cache';
+
   const categories = await getCategories();
 
   return categories.map(category => {

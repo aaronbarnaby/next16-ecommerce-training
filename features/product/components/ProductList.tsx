@@ -12,11 +12,11 @@ export type SearchParams = {
 };
 
 type Props = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 export default async function ProductList({ searchParams }: Props) {
-  const { q, sort, page, category } = searchParams;
+  const { q, sort, page, category } = await searchParams;
   const pageNumber = page ? parseInt(page, 10) : 1;
   const { products, totalPages, currentPage } = await getProducts(q, sort, pageNumber, 9, category);
   const hasProducts = products.length > 0;

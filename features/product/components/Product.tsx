@@ -12,10 +12,12 @@ type Props = {
 };
 
 export default async function Product({ productId, details, imageClassName }: Props) {
+  'use cache';
+
   const product = await getProduct(productId);
 
   return (
-    <Boundary hydration="server" rendering="hybrid">
+    <Boundary hydration="server" rendering="hybrid" cached>
       <div className="flex flex-col bg-white dark:bg-black">
         <ImagePlaceholder className={imageClassName} />
         <div className="flex flex-1 flex-col p-5">
