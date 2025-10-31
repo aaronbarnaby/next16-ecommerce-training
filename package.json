@@ -1,0 +1,70 @@
+{
+  "name": "next15-commerce",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build --turbo",
+    "start": "next start",
+    "lint": "eslint .",
+    "typegen": "next typegen .",
+    "prisma.studio": "npx prisma studio",
+    "prisma.seed": "tsx prisma/seed.ts",
+    "prisma.migrate": "npx prisma migrate dev",
+    "prisma.push": "npx prisma db push"
+  },
+  "dependencies": {
+    "@ariakit/react": "^0.4.19",
+    "@prisma/client": "^6.17.1",
+    "@tailwindcss/postcss": "^4.1.15",
+    "@types/node": "24.9.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
+    "babel-plugin-react-compiler": "^19.1.0-rc.2",
+    "clsx": "^2.1.1",
+    "eslint": "9.38.0",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.546.0",
+    "next": "^16.0.0-canary.18",
+    "postcss": "^8.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-error-boundary": "^6.0.0",
+    "server-only": "^0.0.1",
+    "swr": "^2.3.6",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.15",
+    "tsx": "^4.20.6",
+    "typescript": "5.9.3"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.4.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.38.0",
+    "@prisma/client": "^6.17.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/eslint": "^9.6.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "eslint-config-next": "15.5.6",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-autofix": "^2.2.0",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.7.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@vercel/speed-insights",
+      "esbuild",
+      "sharp"
+    ],
+    "ignoredBuiltDependencies": [
+      "unrs-resolver"
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+{
+    "welcomeBanner": {
+        "scope": "typescriptreact",
+        "prefix": "welcomeBanner",
+        "body": [
+            "export default function WelcomeBanner() {",
+            "  return (",
+            "    <BannerContainer>",
+            "      <Suspense fallback={<GeneralBanner />}>",
+            "        <PersonalBanner />",
+            "      </Suspense>",
+            "    </BannerContainer>",
+            "  );",
+            "}"
+        ],
+    },
+    "membershipLink": {
+        "scope": "typescriptreact",
+        "prefix": "membershipLink",
+        "body": [
+            "<Suspense fallback={<GeneralMembershipLink />}>",
+            "  <PersonalMembershipLink />",
+            "</Suspense>"
+        ]
+    },
+    "generateStaticParams": {
+        "scope": "typescriptreact",
+        "prefix": "generateStaticParams",
+        "body": [
+            "export async function generateStaticParams() {",
+            "  return [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }];",
+            "}"
+        ]
+    },
+    "bookmarkSuspense": {
+        "scope": "typescriptreact",
+        "prefix": "bookmarkSuspense",
+        "body": [
+            "<Suspense fallback={<Bookmark aria-hidden className=\"text-gray size-5\" />}>",
+
+        ]
+    },
+    "useAuth": {
+        "scope": "typescriptreact",
+        "prefix": "useAuth",
+        "body": [
+            "const { loggedIn: loggedInPromise } = useAuth()",
+            "const loggedIn = use(loggedInPromise);"
+        ]
+    },
+    "suspenseWithFallback": {
+        "scope": "typescriptreact",
+        "prefix": "suspenseWithFallback",
+        "body": [
+            "<Suspense fallback={<Skeleton />}>",
+            "  ${TM_SELECTED_TEXT}",
+            "</Suspense>"
+        ],
+        "description": "Wraps selected component with Suspense and duplicates the name for fallback Skeleton."
+    },
+    "isAuth": {
+        "scope": "typescriptreact",
+        "prefix": "isAuth",
+        "body": [
+            "const loggedIn = await getIsAuthenticated();",
+        ]
+    },
+    "getDiscountData": {
+        "scope": "typescriptreact",
+        "prefix": "getDiscountData",
+        "body": [
+            "const [account, discounts, savedProducts] = await Promise.all([",
+            "  getCurrentAccount(),",
+            "  getUserDiscounts(),",
+            "  getSavedProducts(),",
+            "]);",
+        ]
+    },
+    "bannerContainer": {
+        "scope": "typescriptreact",
+        "prefix": "bannerContainer",
+        "body": [
+            "export default function BannerContainer({children}: { children: React.ReactNode }) {",
+        ]
+    },
+    "uc": {
+        "scope": "typescriptreact",
+        "prefix": "uc",
+        "body": [
+            "\"use cache\"",
+        ]
+    },
+    "cacheApis": {
+        "scope": "typescriptreact",
+        "prefix": "cacheApis",
+        "body": [
+            "cacheTag('featured-product')",
+            "revalidateTag('featured-product')",
+            "cacheLife('days')"
+        ]
+    },
+    "loadingPage": {
+        "scope": "typescriptreact",
+        "prefix": "loadingPage",
+        "body": [
+            "export default function Loading() {",
+            "  return (",
+            "    <>",
+            "      <SearchSkeleton />",
+            "      <div className=\"flex h-full grow gap-12\">",
+            "        <div className=\"hidden w-64 shrink-0 lg:block\">",
+            "          <div className=\"sticky top-4\">",
+            "            <h3 className=\"mb-5 text-lg font-bold tracking-tight uppercase\">Categories</h3>",
+            "            <CategoryFiltersSkeleton />",
+            "          </div>",
+            "        </div>",
+            "        <div className=\"flex flex-1 flex-col gap-6\">",
+            "          <div className=\"flex flex-col gap-4 lg:hidden\">",
+            "            <CategoryFiltersSkeleton />",
+            "            <div className=\"flex justify-end\">",
+            "              <SortButtonSkeleton />",
+            "            </div>",
+            "          </div>",
+            "          <div className=\"hidden justify-end lg:flex\">",
+            "            <SortButtonSkeleton />",
+            "          </div>",
+            "          <ProductListSkeleton />",
+            "        </div>",
+            "      </div>",
+            "    </>",
+            "  );",
+            "}"
+        ]
+    }
+}
+
